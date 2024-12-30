@@ -21,7 +21,7 @@ public class PostController {
         return postService.getPosts();
     }
 
-    @GetMapping(path = "{post_id}")
+    @GetMapping(path = "/{post_id}")
     public Post getPost(@PathVariable Integer id) {
         return postService.getPost(id);
     }
@@ -39,7 +39,7 @@ public class PostController {
     }
 
     // U P D A T E
-    @PutMapping(path = "{post_id}")
+    @PutMapping(path = "/{post_id}")
     public void updatePost(@PathVariable Integer id, @RequestBody Post post) {
         postService.updatePost(id, post.getTitle(), post.getContent());
     }

@@ -47,6 +47,7 @@ public class PostService {
             post.setTitle(title);
         if (content != null && content.length() > 0 && !Objects.equals(content, post.getContent()))
             post.setContent(content);
+//        post.setLast_created(new java.util.Date());  // update last_created time upon updating post.
         postRepository.save(post);
     }
 }
