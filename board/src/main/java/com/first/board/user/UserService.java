@@ -20,7 +20,15 @@ public class UserService {
     }
 
     // C R E A T E
-
+    public void addUser(User user) {
+        userRepository.findUserById(user.getId()).ifPresent(u -> {
+            throw new IllegalArgumentException("User with id " + user.getId() + " already exists.");
+        });
+        userRepository.findUserByEmail(user.getEmail()).ifPresent(u -> {
+            throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists.");
+        });
+        userRepository.save(user);
+    }
 
     // U P D A T E
 
