@@ -1,32 +1,106 @@
 package com.first.board.post;
 
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
+@Entity
+@Table(name = "post")
 public class Post {
-    // 글 ID
+    private static Integer count = 1;
+    // 글 ID, 작성자, 제목, 내용, 등록일들
+    @Id
+    @SequenceGenerator(
+            name = "post_id_seq",
+            sequenceName = "post_id_seq",
+            allocationSize = 1 // id auto increment
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "post_id_seq"
+    )
     private Integer id;
-    // 글 작성자
     private String writer;
-    // 글 제목
-    @Lob // 대용량 처리(DB에서 TEXT타입 처리)
+    @Lob
     private String title;
-    // 글 내용 (?) : 글 내용은 크기가 훨씬 커야하지 않나?
     private String content;
-    // 글 등록일
-    private Date created;
-    // 글의 댓글 ID
+    private Date first_created = new Date();
+    private Date last_created = first_created;
+    private Integer likeCount = 0;
 
-    
-    private Integer commentId;
-    // 댓글 작성자
-    private String commentWriter;
-    // 댓글 내용
-    private String commentTitle;
-    // 댓글 등록일
-    private Date commentCreated;
-    // 추천수
-    private Integer likeCount;
 
+    public Post(String writer, String title) {
+        this.writer = writer;
+        this.title = title;
+        this.content = "Not Yet Implemented.";
+    }
+
+    public Post(String writer, String title, String content) {
+        this.writer = writer;
+        this.title = title;
+        this.content = content;
+    }
+
+    public Post() {
+        this.writer = "Anonymous" + (count).toString() + ")";
+        this.title = "None" + (count++).toString() + ")";
+        this.content = "None of the following.";
+    }
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public void setWriter(String writer) {
+        this.writer = writer;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Date getFirst_created() {
+        return first_created;
+    }
+
+    public void setFirst_created(Date first_created) {
+        this.first_created = first_created;
+    }
+
+    public Date getLast_created() {
+        return last_created;
+    }
+
+    public void setLast_created(Date last_created) {
+        this.last_created = last_created;
+    }
+
+    public Integer getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
+    }
 }

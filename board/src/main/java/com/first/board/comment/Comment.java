@@ -1,32 +1,43 @@
 package com.first.board.comment;
 
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 
 import java.util.Date;
 
+@Entity
+@Table(name = "comment")
 public class Comment {
-    // 글 ID
-    private Integer id;
-    // 글 작성자
-    private String writer;
-    // 글 제목
-    @Lob // 대용량 처리(DB에서 TEXT타입 처리)
-    private String title;
-    // 글 내용 (?) : 글 내용은 크기가 훨씬 커야하지 않나?
-    private String content;
-    // 글 등록일
-    private Date created;
-    // 글의 댓글 ID
-
-
+    private static Integer count = 1;
+    // 댓글 ID, 작성자, 내용, 등록일, 추천수
+    @Id
+    @SequenceGenerator(
+            name = "comment_id_seq",
+            sequenceName = "comment_id_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "comment_id_seq"
+    )
     private Integer commentId;
-    // 댓글 작성자
+    @Lob
     private String commentWriter;
-    // 댓글 내용
-    private String commentTitle;
-    // 댓글 등록일
-    private Date commentCreated;
-    // 추천수
-    private Integer likeCount;
+    private String commentcontent;
+    private Date comment_first_Created = new Date();
+    private Date comment_last_created = comment_first_Created;
+    private Integer likeCount = 0;
 
+    public Comment(String commentWriter) {
+        this.commentWriter = commentWriter;
+    }
+
+    public Comment(String commentWriter, String commentcontent) {
+        this.commentWriter = commentWriter;
+        this.commentcontent = commentcontent;
+    }
+
+    public Comment() {
+        this.commentWriter = "Anonymous(" + (count++).toString() + ")";
+        this.commentcontent = "None of the following.";
+    }
 }
