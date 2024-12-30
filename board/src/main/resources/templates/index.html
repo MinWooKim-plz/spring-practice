@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Post List</title>
+</head>
+<body>
+<h1>게시글 목록</h1>
+
+<div>
+    <a href="/post/create">새 게시글 추가</a>
+</div>
+
+<ul>
+    <!-- 게시글 목록을 보여주는 부분 -->
+    <th:block th:each="post : ${posts}">
+        <li>
+            <h2 th:text="${post.title}"></h2>
+            <p th:text="${post.content}"></p>
+            <p>작성자: <span th:text="${post.writer}"></span></p>
+            <p>추천수: <span th:text="${post.likeCount}"></span></p>
+            <a th:href="@{/post/{id}(id=${post.id})}">상세보기</a> |
+            <a th:href="@{/post/delete/{id}(id=${post.id})}">삭제</a> |
+            <a th:href="@{/post/update/{id}(id=${post.id})}">수정</a>
+        </li>
+    </th:block>
+</ul>
+</body>
+</html>

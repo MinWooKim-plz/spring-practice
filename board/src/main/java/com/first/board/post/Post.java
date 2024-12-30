@@ -26,7 +26,7 @@ public class Post {
     )
     private Integer id;
     private String writer;
-    @Lob
+    //    @Lob
     private String title;
     private String content;
     @CreationTimestamp
@@ -34,6 +34,8 @@ public class Post {
     @UpdateTimestamp
     private Date last_created;
     private Integer likeCount = 0;
+
+
     //  mappedBy 속성은 Comment 클래스의 post 필드와 매핑됩니다.
     //	cascade = CascadeType.ALL은 Post가 삭제될 때, 해당 Post와 연관된 Comment들도 함께 삭제되도록 합니다.
     //	orphanRemoval = true는 Post와 관계가 끊어진 Comment가 자동으로 삭제되도록 합니다.
@@ -114,5 +116,13 @@ public class Post {
 
     public void setLikeCount(Integer likeCount) {
         this.likeCount = likeCount;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

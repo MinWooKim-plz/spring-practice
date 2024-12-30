@@ -23,7 +23,7 @@ public class Comment {
             generator = "comment_id_seq"
     )
     private Integer commentId;
-    @Lob
+    //    @Lob
     private String commentWriter;
     private String commentContent;
     @CreationTimestamp

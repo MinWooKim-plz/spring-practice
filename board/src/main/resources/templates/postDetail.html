@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>게시글 상세보기</title>
+</head>
+<body>
+<h1>게시글 상세보기</h1>
+
+<h2 th:text="${post.title}"></h2>
+<p th:text="${post.content}"></p>
+<p>작성자: <span th:text="${post.writer}"></span></p>
+<p>추천수: <span th:text="${post.likeCount}"></span></p>
+
+<h3>댓글</h3>
+<ul>
+    <th:block th:each="comment : ${post.comments}">
+        <li>
+            <p th:text="${comment.commentWriter}"></p>
+            <p th:text="${comment.commentContent}"></p>
+            <a th:href="@{/comment/delete/{id}(id=${comment.commentId})}">삭제</a>
+        </li>
+    </th:block>
+</ul>
+
+<form action="/post/{id}/comment" method="post">
+    <label for="commentWriter">댓글 작성자</label>
+    <input id="commentWriter" name="commentWriter" required type="text"><br><br>
+
+    <label for="commentContent">댓글 내용</label>
+    <textarea id="commentContent" name="commentContent" required></textarea><br><br>
+
+    <button type="submit">댓글 작성</button>
+</form>
+
+<a href="/post">목록으로 돌아가기</a>
+</body>
+</html>

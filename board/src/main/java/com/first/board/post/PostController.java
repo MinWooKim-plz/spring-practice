@@ -22,7 +22,7 @@ public class PostController {
     }
 
     @GetMapping(path = "/{post_id}")
-    public Post getPost(@PathVariable Integer id) {
+    public Post getPost(@PathVariable(name = "post_id") Integer id) {
         return postService.getPost(id);
     }
 
@@ -33,14 +33,14 @@ public class PostController {
     }
 
     // D E L E T E
-    @DeleteMapping
-    public void deletePost(@PathVariable Integer id) {
+    @DeleteMapping(path = "/delete/{post_id}")
+    public void deletePost(@PathVariable(name = "post_id") Integer id) {
         postService.deletePost(id);
     }
 
     // U P D A T E
     @PutMapping(path = "/{post_id}")
-    public void updatePost(@PathVariable Integer id, @RequestBody Post post) {
+    public void updatePost(@PathVariable(name = "post_id") Integer id, @RequestBody Post post) {
         postService.updatePost(id, post.getTitle(), post.getContent());
     }
 }
