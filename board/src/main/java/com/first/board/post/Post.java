@@ -1,8 +1,13 @@
 package com.first.board.post;
 
+import com.first.board.comment.Comment;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "post")
@@ -24,9 +29,16 @@ public class Post {
     @Lob
     private String title;
     private String content;
-    private Date first_created = new Date();
-    private Date last_created = first_created;
+    @CreationTimestamp
+    private Date first_created;
+    @UpdateTimestamp
+    private Date last_created;
     private Integer likeCount = 0;
+    //  mappedBy 속성은 Comment 클래스의 post 필드와 매핑됩니다.
+    //	cascade = CascadeType.ALL은 Post가 삭제될 때, 해당 Post와 연관된 Comment들도 함께 삭제되도록 합니다.
+    //	orphanRemoval = true는 Post와 관계가 끊어진 Comment가 자동으로 삭제되도록 합니다.
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<Comment>();
 
 
     public Post(String writer, String title) {
@@ -42,7 +54,7 @@ public class Post {
     }
 
     public Post() {
-        this.writer = "Anonymous" + (count).toString() + ")";
+        this.writer = "Anonymous" + (count++).toString() + ")";
         this.title = "None" + (count++).toString() + ")";
         this.content = "None of the following.";
     }

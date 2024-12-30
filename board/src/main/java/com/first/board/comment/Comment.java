@@ -1,6 +1,9 @@
 package com.first.board.comment;
 
+import com.first.board.post.Post;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
@@ -23,9 +26,14 @@ public class Comment {
     @Lob
     private String commentWriter;
     private String commentcontent;
-    private Date comment_first_Created = new Date();
-    private Date comment_last_created = comment_first_Created;
+    @CreationTimestamp
+    private Date comment_first_Created;
+    @UpdateTimestamp
+    private Date comment_last_created;
     private Integer likeCount = 0;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 
     public Comment(String commentWriter) {
         this.commentWriter = commentWriter;
