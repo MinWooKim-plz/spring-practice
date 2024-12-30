@@ -54,10 +54,10 @@ public class BuserService {
     public void updateBuser(Integer id, String name, String email) {
         Buser buser = buserRepository.findBuserById(id)
                 .orElseThrow(() -> new IllegalStateException("Not found buser: " + id));
-        if (name != null && name.length() > 0 && Objects.equals(buser.getName(), name)) {
+        if (name != null && name.length() > 0 && !Objects.equals(buser.getName(), name)) {
             buser.setName(name);
         }
-        if (email != null && email.length() > 0 && Objects.equals(buser.getEmail(), email)) {
+        if (email != null && email.length() > 0 && !Objects.equals(buser.getEmail(), email)) {
             if (buserRepository.findBuserByEmail(email).isPresent())
                 throw new IllegalArgumentException("User with email " + email + " already exists.");
             buser.setEmail(email);
