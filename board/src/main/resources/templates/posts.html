@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Post List</title>
+</head>
+<body>
+<h1>Post List</h1>
+
+<a href="/post/create">Create New Post</a> <!-- 게시글 작성 페이지로 이동 -->
+
+<div th:each="post : ${posts}">
+    <h2>
+        <a th:href="@{/post/{id}(id=${post.id})}" th:text="${post.title}"></a> <!-- 게시글 상세 페이지로 이동 -->
+    </h2>
+    <p th:text="${post.content}"></p>
+    <form method="post" style="display:inline;" th:action="@{/post/delete/{id}(id=${post.id})}">
+        <button type="submit">Delete</button>
+    </form>
+</div>
+</body>
+</html>
